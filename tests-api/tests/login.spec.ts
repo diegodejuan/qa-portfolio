@@ -22,6 +22,27 @@ test("GET /users válido → 200 OK + verificación array respuesta", async ({ r
     }
 });
 
+test("POST /login erróneo → 400 Bad Request", async ({ request }) => {
+    const headers = {
+        "x-api-key": "reqres-free-v1"
+    }
+
+    const response = await request.post("/api/login", {
+        data: { email: users.validUser.email },
+        headers: headers
+    });
+
+    expect(response.status()).toBe(400);
+    const body = await response.json();
+
+    //Validamos que la respuesta contenga la propiedad error
+    expect(body).toHaveProperty("error");
+
+    //Validamos mensaje de error
+    expect(body.error).toEqual("Missing password");
+
+});
+
 test("POST /login válido → 200 OK + token no vacío", async ({ request }) => {
     const headers = {
         "x-api-key": "reqres-free-v1"
