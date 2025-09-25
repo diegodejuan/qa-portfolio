@@ -16,10 +16,11 @@ blob-report/
 # k6
 # -----------------------------
 # Archivos de salida / reportes
-*.json
-*.csv
-*.html
-*.out
+/performance/k6/*.json
+/performance/k6/*.csv
+/performance/k6/*.html
+/performance/k6/*.out
+
 
 # -----------------------------
 # JMeter

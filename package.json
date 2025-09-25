@@ -1,0 +1,26 @@
+{
+  "name": "qa-portfolio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui",
+    "test:api": "npx playwright test tests-api/tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegodejuan/qa-portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/diegodejuan/qa-portfolio/issues"
+  },
+  "homepage": "https://github.com/diegodejuan/qa-portfolio#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.55.1"
+  }
+}
