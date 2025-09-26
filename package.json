@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/diegodejuan/qa-portfolio#readme",
   "devDependencies": {
-    "@playwright/test": "^1.55.1"
+    "@playwright/test": "^1.55.1",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
   }
 }
