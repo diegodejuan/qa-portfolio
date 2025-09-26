@@ -1,15 +1,11 @@
 import { test, expect } from "@playwright/test";
 import users from "../fixtures/users.json";
+import { ApiClient } from "../apiClient";
 
 test("GET /users válido → 200 OK + verificación array respuesta", async ({ request }) => {
-    const headers = {
-        "x-api-key": "reqres-free-v1"
-    };
-
-    const response = await request.get("/api/users?page=2", {
-        headers: headers
-    });
-
+    const apiClient = new ApiClient(request);
+    const response = await apiClient.getUsers(2);
+    
     // Status esperado
     expect(response.status()).toBe(200);
 
@@ -35,14 +31,8 @@ test("GET /users válido → 200 OK + verificación array respuesta", async ({ r
 });
 
 test("POST /login válido → 200 OK + token no vacío", async ({ request }) => {
-    const headers = {
-        "x-api-key": "reqres-free-v1"
-    };
-
-    const response = await request.post("/api/login", {
-        data: users.validUser,
-        headers: headers
-    });
+    const apiClient = new ApiClient(request);
+    const response = await apiClient.login(users.validUser);
 
     const body = await response.json();
 
@@ -58,15 +48,9 @@ test("POST /login válido → 200 OK + token no vacío", async ({ request }) => 
 });
 
 test("POST /login sin password → 400 Bad Request", async ({ request }) => {
-    const headers = {
-        "x-api-key": "reqres-free-v1"
-    };
-
-    const response = await request.post("/api/login", {
-        data: { email: users.validUser.email },
-        headers: headers
-    });
-
+    const apiClient = new ApiClient(request);
+    const response = await apiClient.login({ email: users.validUser.email });
+    
     expect(response.status()).toBe(400);
 
     const body = await response.json();
@@ -77,15 +61,9 @@ test("POST /login sin password → 400 Bad Request", async ({ request }) => {
 
 
 test("POST /login sin email → 400 Bad Request", async ({ request }) => {
-    const headers = {
-        "x-api-key": "reqres-free-v1"
-    }
-
-    const response = await request.post("/api/login", {
-        data: { password: users.validUser.password },
-        headers: headers
-    });
-
+    const apiClient = new ApiClient(request);
+    const response = await apiClient.login({ password: users.validUser.password });
+    
     expect(response.status()).toBe(400);
     const body = await response.json();
 
