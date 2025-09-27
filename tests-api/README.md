@@ -8,5 +8,6 @@ Demostrar buenas prácticas de **API Testing**:
 - Cobertura de casos **positivos y negativos**.
 - Validación de códigos de estado HTTP y estructura del body.
 - Uso de `baseURL` definido en `playwright.config.ts`.
-
+- Validación de esquemas JSON con **AJV**.
+- Validación de **metadatos de paginación**.
 
