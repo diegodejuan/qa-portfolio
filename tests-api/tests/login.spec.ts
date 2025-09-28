@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import users from "../fixtures/users.json";
-import { ApiClient } from "../ApiClient";
+import { ApiClient } from "../apiClient";
 
 test("POST /login válido → 200 OK + token no vacío", async ({ request }) => {
     const apiClient = new ApiClient(request);

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { ApiClient } from "../ApiClient";
+import { ApiClient } from "../apiClient";
 
 test("GET /users?page=2 válido → 200 OK + verificación array respuesta", async ({ request }) => {
     const apiClient = new ApiClient(request);
