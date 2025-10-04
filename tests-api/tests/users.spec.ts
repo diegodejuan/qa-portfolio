@@ -55,11 +55,8 @@ test("GET /users?page=2 → validación de paginación", async ({ request }) => 
 });
 
 test("GET /users/23 → 404 Usuario no existe", async ({ request }) => {
-    const response = await request.get('/api/users/23', {
-        headers: {
-            "x-api-key": "reqres-free-v1"
-        }
-    });
+    const apiClient = new ApiClient(request);
+    const response = await apiClient.getUser(23);
 
     //Validamos el status code
     expect(response.status()).toBe(404);
