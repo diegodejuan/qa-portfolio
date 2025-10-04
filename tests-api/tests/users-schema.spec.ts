@@ -2,19 +2,15 @@ import { test, expect } from "@playwright/test";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import schema from "../schemas/user-schema.json";
+import { ApiClient } from "../apiClient";
 
 const ajv = new Ajv({ allErrors: true });
 addFormats(ajv);
 const validate = ajv.compile(schema);
 
 test("GET /users → validación de esquema con AJV", async ({ request }) => {
-    const headers = {
-        "x-api-key": "reqres-free-v1"
-    };
-
-    const response = await request.get("/api/users?page=2", {
-        headers: headers
-    });
+    const apiClient = new ApiClient(request);
+    const response = await apiClient.getUsers(2);
     expect(response.status()).toBe(200);
 
     const body = await response.json();
