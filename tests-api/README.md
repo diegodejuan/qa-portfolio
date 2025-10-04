@@ -11,3 +11,15 @@ Demostrar buenas prácticas de **API Testing**:
 - Validación de esquemas JSON con **AJV**.
 - Validación de **metadatos de paginación**.
 
+## Ejecución de tests
+# Instalar dependencias
+npm install
+
+# Ejecutar todos los tests contra Reqres
+npx playwright test tests-api --reporter=html
+
+## Integración contínua
+Desactivada debido a que Reqres tiene un límite mu bajo de peticiones en su versión gratuíta,
+lo cual hace que suelan fallar al ejecutarlos todos.
+Se comenta el contenido del archivo ci.yml
+
