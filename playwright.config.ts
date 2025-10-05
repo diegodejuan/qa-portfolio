@@ -1,5 +1,12 @@
 import { defineConfig } from "@playwright/test";
 
+//Al lanzar cualquier prueba con Playwright (por ejemplo desde el test runner integrado de VS Code usando el script npm test),
+//Playwright arranca automáticamente el servidor definido en playwright.config.ts. Allí se declara un webServer cuya orden es
+//node src/api/server.js, de modo que antes de ejecutar los tests se lanza ese proceso y se reutiliza si ya estaba activo en
+//entornos no CI.
+
+
+
 export default defineConfig({
   use: {
     baseURL: process.env.MOCK_PRUEBA_BASE_URL || "http://127.0.0.1:3000",
