@@ -12,7 +12,7 @@ export class ApiClient {
 
   private buildHeaders(extraHeaders: Record<string, string> = {}): Record<string, string> {
     return {
-      "x-api-key": "reqres-free-v1",
+      "x-api-key": "mock-prueba-free-v1",
       ...extraHeaders
     };
   }
