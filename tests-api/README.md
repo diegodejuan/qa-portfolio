@@ -1,6 +1,6 @@
-# API Testing – ReqRes.in (Playwright)
+# API Testing – mock-prueba (Playwright)
 
-Este módulo contiene pruebas automatizadas de API contra el servicio público [ReqRes](https://reqres.in/), utilizando Playwright.
+Este módulo contiene pruebas automatizadas de API contra el servicio ficticio [mock-prueba](https://mock-prueba.in/), utilizando Playwright.
 
 ## Objetivo
 Demostrar buenas prácticas de **API Testing**:
@@ -12,14 +12,17 @@ Demostrar buenas prácticas de **API Testing**:
 - Validación de **metadatos de paginación**.
 
 ## Ejecución de tests
+# Levantar el mock server de mock-prueba
+node src/api/server.js
+
 # Instalar dependencias
 npm install
 
-# Ejecutar todos los tests contra Reqres
+# Ejecutar todos los tests contra mock-prueba
 npx playwright test tests-api --reporter=html
 
 ## Integración contínua
-Desactivada debido a que Reqres tiene un límite mu bajo de peticiones en su versión gratuíta,
+Desactivada debido a que mock-prueba tiene un límite muy bajo de peticiones en su versión gratuita,
 lo cual hace que suelan fallar al ejecutarlos todos.
 Se comenta el contenido del archivo ci.yml
 
