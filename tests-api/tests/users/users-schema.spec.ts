@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/test";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
-import schema from "../schemas/user-schema.json";
-import { ApiClient } from "../apiClient";
+import schema from "../../schemas/user-schema.json";
+import { ApiClient } from "../../apiClient";
 
 const ajv = new Ajv({ allErrors: true });
 addFormats(ajv);

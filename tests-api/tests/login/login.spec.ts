@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
-import users from "../fixtures/users.json";
-import { ApiClient } from "../apiClient";
+import users from "../../fixtures/users.json";
+import { ApiClient } from "../../apiClient";
 
 test("POST /login válido → 200 OK + token no vacío", async ({ request }) => {
     const apiClient = new ApiClient(request);
@@ -44,6 +44,14 @@ test("POST /login sin email → 400 Bad Request", async ({ request }) => {
 
     //Validamos mensaje de error
     expect(body.error).toEqual("Missing email or username");
+});
 
+test("POST /login no expone la contraseña en la respuesta", async ({ request }) => {
+    const apiClient = new ApiClient(request);
+    const response = await apiClient.login(users.validUser);
+    const body = await response.json();
+
+    // La respuesta nunca debe contener la propiedad 'password'
+    expect(body).not.toHaveProperty("password");
 });
 
