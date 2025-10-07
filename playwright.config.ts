@@ -5,7 +5,8 @@ import { defineConfig } from "@playwright/test";
 //node src/api/server.js, de modo que antes de ejecutar los tests se lanza ese proceso y se reutiliza si ya estaba activo en
 //entornos no CI.
 
-
+//Este archivo asegura que, al ejecutar los tests, el servidor de la API esté activo y que las pruebas usen la URL
+//y puerto correctos. 
 
 export default defineConfig({
   use: {
