@@ -1,9 +1,6 @@
-import { test, expect } from "@playwright/test";
-import users from "../../fixtures/users.json";
-import { ApiClient } from "../../apiClient";
+import { test, expect } from "../../fixtures/apiClient.fixture";
 
-test("POST /login válido → 200 OK + token no vacío", async ({ request }) => {
-    const apiClient = new ApiClient(request);
+test("POST /login válido → 200 OK + token no vacío", async ({ apiClient, users }) => {
     const response = await apiClient.login(users.validUser);
 
     const body = await response.json();
@@ -19,8 +16,7 @@ test("POST /login válido → 200 OK + token no vacío", async ({ request }) => 
     expect(body.token.length).toBeGreaterThan(0);
 });
 
-test("POST /login sin password → 400 Bad Request", async ({ request }) => {
-    const apiClient = new ApiClient(request);
+test("POST /login sin password → 400 Bad Request", async ({ apiClient, users }) => {
     const response = await apiClient.login({ email: users.validUser.email });
     
     expect(response.status()).toBe(400);
@@ -32,8 +28,7 @@ test("POST /login sin password → 400 Bad Request", async ({ request }) => {
 });
 
 
-test("POST /login sin email → 400 Bad Request", async ({ request }) => {
-    const apiClient = new ApiClient(request);
+test("POST /login sin email → 400 Bad Request", async ({ apiClient, users }) => {
     const response = await apiClient.login({ password: users.validUser.password });
     
     expect(response.status()).toBe(400);
@@ -46,8 +41,7 @@ test("POST /login sin email → 400 Bad Request", async ({ request }) => {
     expect(body.error).toEqual("Missing email or username");
 });
 
-test("POST /login no expone la contraseña en la respuesta", async ({ request }) => {
-    const apiClient = new ApiClient(request);
+test("POST /login no expone la contraseña en la respuesta", async ({ apiClient, users }) => {
     const response = await apiClient.login(users.validUser);
     const body = await response.json();
 

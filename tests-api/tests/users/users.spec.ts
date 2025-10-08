@@ -1,8 +1,6 @@
-import { test, expect } from "@playwright/test";
-import { ApiClient } from "../../apiClient";
+import { test, expect } from "../../fixtures/apiClient.fixture";
 
-test("GET /users?page=2 válido → 200 OK + verificación array respuesta", async ({ request }) => {
-    const apiClient = new ApiClient(request);
+test("GET /users?page=2 válido → 200 OK + verificación array respuesta", async ({ apiClient }) => {
     const response = await apiClient.getUsers(2);
 
     // Status esperado
@@ -29,9 +27,8 @@ test("GET /users?page=2 válido → 200 OK + verificación array respuesta", asy
     }
 });
 
-test("GET /users?page=2 → validación de paginación", async ({ request }) => {
+test("GET /users?page=2 → validación de paginación", async ({ apiClient }) => {
     const page = 2;
-    const apiClient = new ApiClient(request);
     const response = await apiClient.getUsers(page);
 
     expect(response.status()).toBe(200);
@@ -54,8 +51,7 @@ test("GET /users?page=2 → validación de paginación", async ({ request }) => 
     expect(body.data.length).toBeGreaterThan(0);
 });
 
-test("GET /users/23 → 404 Usuario no existe", async ({ request }) => {
-    const apiClient = new ApiClient(request);
+test("GET /users/23 → 404 Usuario no existe", async ({ apiClient }) => {
     const response = await apiClient.getUser(23);
 
     //Validamos el status code
