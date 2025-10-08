@@ -1,6 +1,4 @@
-import { test, expect } from "@playwright/test";
-import { ApiClient } from "../../apiClient";
-import users from "../../fixtures/users.json";
+import { test, expect } from "../../fixtures/apiClient.fixture";
 
 // 1. Intentos de login con datos maliciosos
 const maliciousInputs = [
@@ -10,8 +8,7 @@ const maliciousInputs = [
 ];
 
 maliciousInputs.forEach((input, idx) => {
-  test(`Seguridad: login rechaza datos maliciosos (${idx + 1})`, async ({ request }) => {
-    const apiClient = new ApiClient(request);
+  test(`Seguridad: login rechaza datos maliciosos (${idx + 1})`, async ({ apiClient }) => {
     const response = await apiClient.login(input);
     expect(response.status()).toBe(400);
     const body = await response.json();
@@ -20,8 +17,7 @@ maliciousInputs.forEach((input, idx) => {
 });
 
 // 2. Fuerza bruta (simulación de múltiples intentos fallidos)
-test("Seguridad: login rechaza múltiples intentos fallidos", async ({ request }) => {
-  const apiClient = new ApiClient(request);
+test("Seguridad: login rechaza múltiples intentos fallidos", async ({ apiClient }) => {
   for (let i = 0; i < 5; i++) {
     const response = await apiClient.login({ email: "noexiste@mock-prueba.in", password: "wrong" });
     expect(response.status()).toBe(400);
@@ -31,8 +27,7 @@ test("Seguridad: login rechaza múltiples intentos fallidos", async ({ request }
 });
 
 // 3. Campos inesperados
-test("Seguridad: login ignora campos extra y no otorga privilegios", async ({ request }) => {
-  const apiClient = new ApiClient(request);
+test("Seguridad: login ignora campos extra y no otorga privilegios", async ({ apiClient, users }) => {
   const response = await apiClient.login({ ...users.validUser, admin: true });
   expect(response.status()).toBe(200);
   const body = await response.json();
@@ -40,8 +35,7 @@ test("Seguridad: login ignora campos extra y no otorga privilegios", async ({ re
 });
 
 // 4. Respuesta genérica en errores
-test("Seguridad: login no revela si el email existe", async ({ request }) => {
-  const apiClient = new ApiClient(request);
+test("Seguridad: login no revela si el email existe", async ({ apiClient }) => {
   const response = await apiClient.login({ email: "usuario@noexiste.com", password: "wrong" });
   expect(response.status()).toBe(400);
   const body = await response.json();
@@ -49,8 +43,7 @@ test("Seguridad: login no revela si el email existe", async ({ request }) => {
 });
 
 // 5. Tamaño de payload
-test("Seguridad: login rechaza payload muy grande", async ({ request }) => {
-  const apiClient = new ApiClient(request);
+test("Seguridad: login rechaza payload muy grande", async ({ apiClient }) => {
   const bigString = "a".repeat(2e6); // 2MB
   let response, error;
   try {
@@ -70,8 +63,7 @@ test("Seguridad: login rechaza payload muy grande", async ({ request }) => {
 });
 
 // 6. Validación de tipos
-test("Seguridad: login rechaza tipos incorrectos", async ({ request }) => {
-  const apiClient = new ApiClient(request);
+test("Seguridad: login rechaza tipos incorrectos", async ({ apiClient }) => {
   const response = await apiClient.login({ email: 12345, password: ["not", "a", "string"] });
   expect(response.status()).toBe(400);
   const body = await response.json();
