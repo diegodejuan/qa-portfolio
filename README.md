@@ -69,6 +69,8 @@ npx playwright test
 npx playwright test tests-api/tests/login.spec.ts
 ```
 
+> ℹ️ Las suites de API validan tanto escenarios exitosos como de error, incluyendo la resiliencia del endpoint frente a bodies JSON corruptos.
+
 ### 🔹 Generar un reporte en HTML
 ```bash
 npx playwright test --reporter=html
