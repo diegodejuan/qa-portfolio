@@ -49,3 +49,22 @@ test("POST /login no expone la contraseña en la respuesta", async ({ apiClient,
     expect(body).not.toHaveProperty("password");
 });
 
+test("POST /login con JSON corrupto → 400 Bad Request", async ({ request }) => {
+    const response = await request.post("/api/login", {
+        headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "mock-prueba-free-v1",
+        },
+        // Playwright envuelve los strings en comillas cuando se usa `data`. Al mandar el payload
+        // como Buffer lo enviamos en crudo para que el servidor reciba realmente `{bad json` y
+        // dispare el handler de JSON inválido.
+        data: Buffer.from("{bad json"),
+    });
+
+    expect(response.status()).toBe(400);
+
+    const body = await response.json();
+
+    expect(body).toMatchObject({ error: "Invalid JSON payload" });
+});
+
